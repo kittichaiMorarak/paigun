@@ -38,8 +38,7 @@ class _HomeShellState extends State<HomeShell> {
                 color: Colors.white.withAlpha(40),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.map_rounded,
-                  color: Color(0xFFE5A93C), size: 22),
+              child: const Text('🗺️', style: TextStyle(fontSize: 16)),
             ),
             const SizedBox(width: 10),
             Text(
@@ -71,8 +70,7 @@ class _HomeShellState extends State<HomeShell> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.person_pin,
-                          size: 14, color: Color(0xFFE5A93C)),
+                      const Text('👤', style: TextStyle(fontSize: 12)),
                       const SizedBox(width: 4),
                       Text(
                         user.isGuest
@@ -101,8 +99,7 @@ class _HomeShellState extends State<HomeShell> {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.language_rounded,
-                      size: 14, color: Color(0xFFE5A93C)),
+                  const Text('🌐', style: TextStyle(fontSize: 12)),
                   const SizedBox(width: 4),
                   Text(
                     appState.isEnglish ? 'EN' : 'TH',
@@ -122,11 +119,9 @@ class _HomeShellState extends State<HomeShell> {
             tooltip: appState.isDarkMode
                 ? tr(context, 'เปิดโหมดสว่าง', 'Light Mode')
                 : tr(context, 'เปิดโหมดมืด', 'Dark Mode'),
-            icon: Icon(
-              appState.isDarkMode
-                  ? Icons.light_mode_rounded
-                  : Icons.dark_mode_outlined,
-              size: 20,
+            icon: Text(
+              appState.isDarkMode ? '☀️' : '🌙',
+              style: const TextStyle(fontSize: 16),
             ),
             onPressed: () => appState.toggleThemeMode(),
           ),
@@ -134,7 +129,7 @@ class _HomeShellState extends State<HomeShell> {
           // Logout Button
           IconButton(
             tooltip: tr(context, 'ออกจากระบบ', 'Logout'),
-            icon: const Icon(Icons.logout_rounded, size: 20),
+            icon: const Text('🚪', style: TextStyle(fontSize: 16)),
             onPressed: () async {
               final confirm = await showDialog<bool>(
                 context: context,
@@ -182,25 +177,23 @@ class _HomeShellState extends State<HomeShell> {
           indicatorColor: const Color(0xFF134E3A).withAlpha(38),
           destinations: [
             NavigationDestination(
-              icon: const Icon(Icons.travel_explore_outlined),
-              selectedIcon:
-                  const Icon(Icons.travel_explore, color: Color(0xFF134E3A)),
+              icon: const Text('🧭', style: TextStyle(fontSize: 20)),
+              selectedIcon: const Text('🧭', style: TextStyle(fontSize: 22)),
               label: tr(context, 'สำรวจ', 'Explore'),
             ),
             NavigationDestination(
-              icon: const Icon(Icons.map_outlined),
-              selectedIcon: const Icon(Icons.map, color: Color(0xFF134E3A)),
+              icon: const Text('🗺️', style: TextStyle(fontSize: 20)),
+              selectedIcon: const Text('🗺️', style: TextStyle(fontSize: 22)),
               label: tr(context, 'แผนที่', 'Map'),
             ),
             NavigationDestination(
-              icon: const Icon(Icons.event_note_outlined),
-              selectedIcon:
-                  const Icon(Icons.event_note, color: Color(0xFF134E3A)),
+              icon: const Text('📅', style: TextStyle(fontSize: 20)),
+              selectedIcon: const Text('📅', style: TextStyle(fontSize: 22)),
               label: tr(context, 'แผนเที่ยว', 'My Trip'),
             ),
             NavigationDestination(
-              icon: const Icon(Icons.share_outlined),
-              selectedIcon: const Icon(Icons.share, color: Color(0xFF134E3A)),
+              icon: const Text('👥', style: TextStyle(fontSize: 20)),
+              selectedIcon: const Text('👥', style: TextStyle(fontSize: 22)),
               label: tr(context, 'แผนจากเพื่อน', 'Shared Plans'),
             ),
           ],

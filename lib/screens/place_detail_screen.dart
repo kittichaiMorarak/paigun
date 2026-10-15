@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/place.dart';
 import '../services/app_state.dart';
+import '../services/translations.dart';
 
 String durText(int m) {
   final h = m ~/ 60;
@@ -70,31 +71,35 @@ class PlaceDetailScreen extends StatelessWidget {
             place.close != null &&
             place.close!.isNotEmpty)
         ? '${place.open} - ${place.close} น.'
-        : 'ยังไม่มีข้อมูล';
+        : tr(context, 'ยังไม่มีข้อมูล', 'No info');
 
     final feeText = (place.fee != null && place.fee!.isNotEmpty)
         ? place.fee!
-        : 'ยังไม่มีข้อมูล';
+        : tr(context, 'ยังไม่มีข้อมูล', 'No info');
 
     return Scaffold(
       appBar: AppBar(
         title: Text(place.name),
         actions: [
           IconButton(
-            tooltip: isFavorite ? 'เอาออกจากรายการโปรด' : 'เพิ่มในรายการโปรด',
-            icon: Icon(
-              isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-              color: isFavorite ? Colors.redAccent : Colors.white,
+            tooltip: isFavorite
+                ? tr(context, 'เอาออกจากรายการโปรด', 'Remove Wishlist')
+                : tr(context, 'เพิ่มในรายการโปรด', 'Add Wishlist'),
+            icon: Text(
+              isFavorite ? '❤️' : '🤍',
+              style: const TextStyle(fontSize: 20),
             ),
             onPressed: () {
               appState.toggleFavorite(place.id);
             },
           ),
           IconButton(
-            tooltip: isSelected ? 'เอาออกจากแผน' : 'เพิ่มลงแผน',
-            icon: Icon(
-              isSelected ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
-              color: isSelected ? const Color(0xFFE5A93C) : Colors.white,
+            tooltip: isSelected
+                ? tr(context, 'เอาออกจากแผน', 'Remove Plan')
+                : tr(context, 'เพิ่มลงแผน', 'Add Plan'),
+            icon: Text(
+              isSelected ? '🔖' : '🏷️',
+              style: const TextStyle(fontSize: 20),
             ),
             onPressed: () {
               appState.togglePlaceSelection(place.id);
@@ -118,7 +123,7 @@ class PlaceDetailScreen extends StatelessWidget {
                     height: 220,
                     color: const Color(0xFF134E3A).withAlpha(40),
                     child: const Center(
-                      child: Icon(Icons.photo, size: 64, color: Colors.grey),
+                      child: Text('📷', style: TextStyle(fontSize: 48)),
                     ),
                   ),
                 ),
@@ -134,10 +139,10 @@ class PlaceDetailScreen extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.star, color: Colors.amber, size: 16),
+                        const Text('⭐', style: TextStyle(fontSize: 12)),
                         const SizedBox(width: 4),
                         Text(
-                          '${place.rating.toStringAsFixed(1)} (${place.reviewCount} รีวิว)',
+                          '${place.rating.toStringAsFixed(1)} (${place.reviewCount} ${tr(context, "รีวิว", "reviews")})',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -166,7 +171,7 @@ class PlaceDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '${place.province} · ภาค${place.region}',
+                    '${place.province} · ${tr(context, "ภาค", "Region")}${place.region}',
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: Colors.grey[700],
                     ),
@@ -179,26 +184,26 @@ class PlaceDetailScreen extends StatelessWidget {
                     runSpacing: 8,
                     children: [
                       Chip(
-                        avatar: const Icon(Icons.category, size: 18),
+                        avatar: const Text('🏷️', style: TextStyle(fontSize: 14)),
                         label: Text(categoryToThai(place.category)),
                         backgroundColor: const Color(0xFF134E3A).withAlpha(20),
                         side: BorderSide.none,
                       ),
                       if (!place.verified)
-                        const Chip(
-                          avatar: Icon(Icons.warning_amber_rounded,
-                              size: 18, color: Colors.amber),
-                          label: Text('ข้อมูลยังไม่ได้ตรวจสอบ'),
-                          backgroundColor: Color(0xFFFFF8E1),
-                          side: BorderSide(color: Colors.amber),
+                        Chip(
+                          avatar: const Text('⚠️', style: TextStyle(fontSize: 14)),
+                          label: Text(tr(
+                              context, 'ข้อมูลยังไม่ได้ตรวจสอบ', 'Unverified')),
+                          backgroundColor: const Color(0xFFFFF8E1),
+                          side: const BorderSide(color: Colors.amber),
                         )
                       else
-                        const Chip(
-                          avatar:
-                              Icon(Icons.verified, size: 18, color: Colors.green),
-                          label: Text('ข้อมูลผ่านการตรวจสอบ'),
-                          backgroundColor: Color(0xFFE8F5E9),
-                          side: BorderSide(color: Colors.green),
+                        Chip(
+                          avatar: const Text('✅', style: TextStyle(fontSize: 14)),
+                          label: Text(tr(context, 'ข้อมูลผ่านการตรวจสอบ',
+                              'Verified')),
+                          backgroundColor: const Color(0xFFE8F5E9),
+                          side: const BorderSide(color: Colors.green),
                         ),
                     ],
                   ),
@@ -212,7 +217,7 @@ class PlaceDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'รายละเอียด',
+                            tr(context, 'รายละเอียด', 'Description'),
                             style: theme.textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: const Color(0xFF134E3A),
@@ -237,20 +242,20 @@ class PlaceDetailScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           _infoRow(
-                            icon: Icons.access_time,
-                            label: 'เวลาเปิด-ปิด',
+                            iconSymbol: '⏱️',
+                            label: tr(context, 'เวลาเปิด-ปิด', 'Opening Hours'),
                             value: openHoursText,
                           ),
                           const Divider(),
                           _infoRow(
-                            icon: Icons.payments_outlined,
-                            label: 'ค่าเข้าชม',
+                            iconSymbol: '💵',
+                            label: tr(context, 'ค่าเข้าชม', 'Entrance Fee'),
                             value: feeText,
                           ),
                           const Divider(),
                           _infoRow(
-                            icon: Icons.timer_outlined,
-                            label: 'เวลาที่ควรใช้',
+                            iconSymbol: '⏳',
+                            label: tr(context, 'เวลาที่ควรใช้', 'Est. Duration'),
                             value: '~${durText(place.avgDurationMin)}',
                           ),
                         ],
@@ -267,16 +272,18 @@ class PlaceDetailScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Row(
+                          Row(
                             children: [
-                              Icon(Icons.restaurant_rounded,
-                                  color: Color(0xFF134E3A)),
-                              SizedBox(width: 8),
+                              const Text('🍽️', style: TextStyle(fontSize: 20)),
+                              const SizedBox(width: 8),
                               Text(
-                                'แนะนำที่พัก & ร้านอาหารใกล้เคียง',
-                                style: TextStyle(
+                                tr(
+                                    context,
+                                    'แนะนำที่พัก & ร้านอาหารใกล้เคียง',
+                                    'Nearby Hotels & Restaurants'),
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                  fontSize: 15,
                                   color: Color(0xFF134E3A),
                                 ),
                               ),
@@ -284,7 +291,10 @@ class PlaceDetailScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'ค้นหาร้านเด็ดและโรงแรมบรรยากาศดีบริเวณใกล้ ${place.name}',
+                            tr(
+                                context,
+                                'ค้นหาร้านเด็ดและโรงแรมบรรยากาศดีบริเวณใกล้ ${place.name}',
+                                'Find great restaurants and hotels near ${place.name}'),
                             style: TextStyle(
                                 fontSize: 13, color: Colors.grey[700]),
                           ),
@@ -299,9 +309,11 @@ class PlaceDetailScreen extends StatelessWidget {
                                     side: const BorderSide(
                                         color: Color(0xFF134E3A)),
                                   ),
-                                  icon: const Icon(Icons.restaurant, size: 16),
-                                  label: const Text('ร้านอาหารใกล้เคียง',
-                                      style: TextStyle(fontSize: 12)),
+                                  icon: const Text('🍲', style: TextStyle(fontSize: 14)),
+                                  label: Text(
+                                      tr(context, 'ร้านอาหารใกล้เคียง',
+                                          'Nearby Food'),
+                                      style: const TextStyle(fontSize: 11)),
                                   onPressed: () => _openMaps(
                                     context,
                                     queryOverride:
@@ -318,9 +330,11 @@ class PlaceDetailScreen extends StatelessWidget {
                                     side: const BorderSide(
                                         color: Color(0xFF134E3A)),
                                   ),
-                                  icon: const Icon(Icons.hotel, size: 16),
-                                  label: const Text('ที่พักใกล้เคียง',
-                                      style: TextStyle(fontSize: 12)),
+                                  icon: const Text('🏨', style: TextStyle(fontSize: 14)),
+                                  label: Text(
+                                      tr(context, 'ที่พักใกล้เคียง',
+                                          'Nearby Hotels'),
+                                      style: const TextStyle(fontSize: 11)),
                                   onPressed: () => _openMaps(
                                     context,
                                     queryOverride:
@@ -349,11 +363,11 @@ class PlaceDetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      icon: const Icon(Icons.navigation_outlined,
-                          color: Color(0xFF134E3A)),
-                      label: const Text(
-                        'เปิดนำทางใน Google Maps',
-                        style: TextStyle(
+                      icon: const Text('🧭', style: TextStyle(fontSize: 16)),
+                      label: Text(
+                        tr(context, 'เปิดนำทางใน Google Maps',
+                            'Open in Google Maps'),
+                        style: const TextStyle(
                           fontSize: 15,
                           color: Color(0xFF134E3A),
                           fontWeight: FontWeight.bold,
@@ -378,13 +392,13 @@ class PlaceDetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      icon: Icon(
-                        isSelected
-                            ? Icons.remove_circle_outline
-                            : Icons.add_circle_outline,
-                      ),
+                      icon: Text(isSelected ? '➖' : '➕',
+                          style: const TextStyle(fontSize: 16)),
                       label: Text(
-                        isSelected ? 'เอาออกจากแผนเที่ยว' : 'เพิ่มลงแผนเที่ยว',
+                        isSelected
+                            ? tr(context, 'เอาออกจากแผนเที่ยว',
+                                'Remove from Trip')
+                            : tr(context, 'เพิ่มลงแผนเที่ยว', 'Add to Trip'),
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -415,7 +429,7 @@ class PlaceDetailScreen extends StatelessWidget {
   }
 
   Widget _infoRow({
-    required IconData icon,
+    required String iconSymbol,
     required String label,
     required String value,
   }) {
@@ -423,7 +437,7 @@ class PlaceDetailScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Icon(icon, color: const Color(0xFF134E3A)),
+          Text(iconSymbol, style: const TextStyle(fontSize: 18)),
           const SizedBox(width: 12),
           Text(
             label,
@@ -439,7 +453,7 @@ class PlaceDetailScreen extends StatelessWidget {
               textAlign: TextAlign.end,
               style: TextStyle(
                 fontSize: 15,
-                color: value == 'ยังไม่มีข้อมูล'
+                color: value == 'ยังไม่มีข้อมูล' || value == 'No info'
                     ? Colors.grey[600]
                     : Colors.black87,
               ),

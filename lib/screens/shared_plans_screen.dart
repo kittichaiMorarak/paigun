@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/app_state.dart';
+import '../services/translations.dart';
 import 'shared_plan_detail_screen.dart';
 
 class SharedPlansScreen extends StatelessWidget {
@@ -12,7 +13,8 @@ class SharedPlansScreen extends StatelessWidget {
     final placesMap = {for (final p in appState.places) p.id: p};
 
     if (plans.isEmpty) {
-      return const Center(child: Text('ยังไม่มีแผนจากเพื่อน'));
+      return Center(
+          child: Text(tr(context, 'ยังไม่มีแผนจากเพื่อน', 'No shared plans yet')));
     }
 
     return ListView.separated(
@@ -77,11 +79,7 @@ class SharedPlansScreen extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              const Icon(
-                                Icons.favorite_rounded,
-                                size: 16,
-                                color: Colors.redAccent,
-                              ),
+                              const Text('❤️', style: TextStyle(fontSize: 12)),
                               const SizedBox(width: 4),
                               Text(
                                 '${plan.likes}',
@@ -104,8 +102,7 @@ class SharedPlansScreen extends StatelessWidget {
                         radius: 10,
                         backgroundColor:
                             const Color(0xFF134E3A).withAlpha(38),
-                        child: const Icon(Icons.person,
-                            size: 12, color: Color(0xFF134E3A)),
+                        child: const Text('👤', style: TextStyle(fontSize: 10)),
                       ),
                       const SizedBox(width: 6),
                       Text(
@@ -134,23 +131,22 @@ class SharedPlansScreen extends StatelessWidget {
                     runSpacing: 4,
                     children: [
                       Chip(
-                        avatar:
-                            const Icon(Icons.calendar_today_rounded, size: 13),
-                        label: Text('${plan.days.length} วัน'),
+                        avatar: const Text('📅', style: TextStyle(fontSize: 12)),
+                        label: Text('${plan.days.length} ${tr(context, "วัน", "days")}'),
                         visualDensity: VisualDensity.compact,
                         backgroundColor: Colors.grey[100],
                         side: BorderSide.none,
                       ),
                       Chip(
-                        avatar: const Icon(Icons.place_rounded, size: 13),
-                        label: Text('${allIds.length} สถานที่'),
+                        avatar: const Text('📍', style: TextStyle(fontSize: 12)),
+                        label: Text('${allIds.length} ${tr(context, "สถานที่", "places")}'),
                         visualDensity: VisualDensity.compact,
                         backgroundColor: Colors.grey[100],
                         side: BorderSide.none,
                       ),
                       if (provinceStr.isNotEmpty)
                         Chip(
-                          avatar: const Icon(Icons.map_rounded, size: 13),
+                          avatar: const Text('🗺️', style: TextStyle(fontSize: 12)),
                           label: Text(provinceStr),
                           visualDensity: VisualDensity.compact,
                           backgroundColor:

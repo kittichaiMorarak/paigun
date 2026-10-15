@@ -3,6 +3,7 @@ import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import '../models/place.dart';
 import '../models/shared_plan.dart';
 import '../services/app_state.dart';
+import '../services/translations.dart';
 import 'place_detail_screen.dart' show durText, PlaceDetailScreen;
 
 class SharedPlanDetailScreen extends StatelessWidget {
@@ -61,12 +62,12 @@ class SharedPlanDetailScreen extends StatelessWidget {
         actions: [
           IconButton(
             tooltip: 'คัดลอกสรุปทริป',
-            icon: const Icon(Icons.copy_rounded),
+            icon: const Text('📋', style: TextStyle(fontSize: 18)),
             onPressed: () => _copyPlanSummary(context, placesMap),
           ),
           IconButton(
             tooltip: 'ถูกใจแผนนี้',
-            icon: const Icon(Icons.favorite_border_rounded),
+            icon: const Text('❤️', style: TextStyle(fontSize: 18)),
             onPressed: () {
               appState.toggleLikeSharedPlan(plan.id);
               ScaffoldMessenger.of(context).showSnackBar(
@@ -112,8 +113,7 @@ class SharedPlanDetailScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      const Icon(Icons.person_outline_rounded,
-                          size: 16, color: Colors.white70),
+                      const Text('👤', style: TextStyle(fontSize: 14)),
                       const SizedBox(width: 4),
                       Text(
                         'โดย ${plan.authorName}',
@@ -121,8 +121,7 @@ class SharedPlanDetailScreen extends StatelessWidget {
                             const TextStyle(color: Colors.white70, fontSize: 13),
                       ),
                       const Spacer(),
-                      const Icon(Icons.favorite_rounded,
-                          size: 16, color: Colors.redAccent),
+                      const Text('❤️', style: TextStyle(fontSize: 14)),
                       const SizedBox(width: 4),
                       Text(
                         '${plan.likes} ไลก์',
@@ -156,7 +155,7 @@ class SharedPlanDetailScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(14),
                   ),
                 ),
-                icon: const Icon(Icons.file_download_outlined),
+                icon: const Text('📥', style: TextStyle(fontSize: 16)),
                 label: const Text(
                   'ใช้แผนนี้เป็นทริปของฉัน',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -299,8 +298,7 @@ class SharedPlanDetailScreen extends StatelessWidget {
                                 fit: BoxFit.cover,
                                 errorBuilder: (_, _, _) => Container(
                                   color: Colors.grey[300],
-                                  child: const Icon(Icons.photo,
-                                      size: 20, color: Colors.grey),
+                                  child: const Text('📷', style: TextStyle(fontSize: 20)),
                                 ),
                               ),
                             ),
@@ -331,10 +329,14 @@ class SharedPlanDetailScreen extends StatelessWidget {
                                       ),
                                     ),
                                     const SizedBox(width: 6),
+                                    const Text('⭐', style: TextStyle(fontSize: 11)),
+                                    const SizedBox(width: 2),
                                     Text(
-                                      '⭐ ${place.rating.toStringAsFixed(1)}',
+                                      place.rating.toStringAsFixed(1),
                                       style: const TextStyle(
-                                          fontSize: 11, color: Colors.amber),
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.amber),
                                     ),
                                   ],
                                 ),
@@ -357,8 +359,7 @@ class SharedPlanDetailScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          const Icon(Icons.chevron_right_rounded,
-                              color: Colors.grey),
+                          const Text('➡️', style: TextStyle(fontSize: 14)),
                         ],
                       ),
                     ),
@@ -368,8 +369,7 @@ class SharedPlanDetailScreen extends StatelessWidget {
                             const EdgeInsets.only(left: 66, top: 6, bottom: 6),
                         child: Row(
                           children: [
-                            const Icon(Icons.directions_car_outlined,
-                                size: 14, color: Colors.grey),
+                            const Text('🚗', style: TextStyle(fontSize: 12)),
                             const SizedBox(width: 4),
                             Text(
                               'เดินทาง ~${durText(travelMinutes)} (${distKm.toStringAsFixed(1)} กม.)',

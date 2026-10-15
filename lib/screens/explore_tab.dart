@@ -76,7 +76,7 @@ class _ExploreTabState extends State<ExploreTab> {
         backgroundColor: const Color(0xFF134E3A),
         foregroundColor: Colors.white,
         elevation: 3,
-        icon: const Icon(Icons.add_location_alt_outlined),
+        icon: const Text('📍', style: TextStyle(fontSize: 16)),
         label: Text(
           tr(context, 'เพิ่มสถานที่', 'Add Place'),
           style: const TextStyle(fontWeight: FontWeight.bold),
@@ -98,18 +98,7 @@ class _ExploreTabState extends State<ExploreTab> {
             ),
             child: Row(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF134E3A),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.check,
-                    size: 12,
-                    color: Colors.white,
-                  ),
-                ),
+                const Text('✅', style: TextStyle(fontSize: 12)),
                 const SizedBox(width: 8),
                 Text(
                   '${tr(context, "เลือกแล้ว", "Selected")}: ${selected.length} ${tr(context, "แห่ง", "places")}',
@@ -121,14 +110,7 @@ class _ExploreTabState extends State<ExploreTab> {
                 ),
                 const Spacer(),
                 FilterChip(
-                  avatar: Icon(
-                    _showFavoritesOnly
-                        ? Icons.favorite_rounded
-                        : Icons.favorite_border_rounded,
-                    size: 15,
-                    color:
-                        _showFavoritesOnly ? Colors.redAccent : Colors.grey[700],
-                  ),
+                  avatar: const Text('❤️', style: TextStyle(fontSize: 12)),
                   label: Text(
                       '${tr(context, "รายการโปรด", "Wishlist")} (${favorites.length})'),
                   selected: _showFavoritesOnly,
@@ -150,8 +132,10 @@ class _ExploreTabState extends State<ExploreTab> {
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search_rounded,
-                          color: Color(0xFF134E3A)),
+                      prefixIcon: const Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Text('🔍', style: TextStyle(fontSize: 16)),
+                      ),
                       hintText: tr(context, 'ค้นหาสถานที่ หรือจังหวัด...',
                           'Search places or provinces...'),
                       hintStyle:
@@ -160,7 +144,7 @@ class _ExploreTabState extends State<ExploreTab> {
                       suffixIcon: _query.isNotEmpty
                           ? IconButton(
                               tooltip: tr(context, 'ล้างคำค้นหา', 'Clear Search'),
-                              icon: const Icon(Icons.clear, size: 18),
+                              icon: const Text('❌', style: TextStyle(fontSize: 14)),
                               onPressed: () => setState(() => _query = ''),
                             )
                           : null,
@@ -186,8 +170,7 @@ class _ExploreTabState extends State<ExploreTab> {
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       value: _sortBy,
-                      icon: const Icon(Icons.sort_rounded,
-                          color: Color(0xFF134E3A)),
+                      icon: const Text('↕️', style: TextStyle(fontSize: 14)),
                       items: [
                         DropdownMenuItem(
                             value: 'rating',
@@ -251,11 +234,7 @@ class _ExploreTabState extends State<ExploreTab> {
             child: Row(
               children: [
                 FilterChip(
-                  avatar: Icon(
-                    Icons.payments_outlined,
-                    size: 14,
-                    color: _freeOnly ? Colors.green[800] : Colors.grey[700],
-                  ),
+                  avatar: const Text('🎟️', style: TextStyle(fontSize: 12)),
                   label: Text(tr(context, 'เข้าชมฟรี', 'Free Entrance')),
                   selected: _freeOnly,
                   selectedColor: Colors.green.shade100,
@@ -333,8 +312,7 @@ class _ExploreTabState extends State<ExploreTab> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.search_off_rounded,
-                            size: 48, color: Colors.grey[400]),
+                        const Text('🔍', style: TextStyle(fontSize: 48)),
                         const SizedBox(height: 8),
                         Text(
                             tr(context, 'ไม่พบสถานที่ที่ค้นหา',
@@ -383,8 +361,7 @@ class _ExploreTabState extends State<ExploreTab> {
                                         fit: BoxFit.cover,
                                         errorBuilder: (_, _, _) => Container(
                                           color: Colors.grey[200],
-                                          child: const Icon(Icons.photo,
-                                              color: Colors.grey),
+                                          child: const Text('📷', style: TextStyle(fontSize: 24)),
                                         ),
                                       ),
                                     ),
@@ -401,8 +378,7 @@ class _ExploreTabState extends State<ExploreTab> {
                                         ),
                                         child: Row(
                                           children: [
-                                            const Icon(Icons.star_rounded,
-                                                size: 12, color: Colors.amber),
+                                            const Text('⭐', style: TextStyle(fontSize: 10)),
                                             const SizedBox(width: 2),
                                             Text(
                                               p.rating.toStringAsFixed(1),
@@ -487,9 +463,7 @@ class _ExploreTabState extends State<ExploreTab> {
                                         const Spacer(),
                                         Row(
                                           children: [
-                                            const Icon(Icons.timer_outlined,
-                                                size: 13,
-                                                color: Color(0xFF134E3A)),
+                                            const Text('⏱️', style: TextStyle(fontSize: 12)),
                                             const SizedBox(width: 4),
                                             Text(
                                               '~${durText(p.avgDurationMin)}',
@@ -522,14 +496,9 @@ class _ExploreTabState extends State<ExploreTab> {
                                                 'Add Wishlist'),
                                         padding: EdgeInsets.zero,
                                         constraints: const BoxConstraints(),
-                                        icon: Icon(
-                                          isFav
-                                              ? Icons.favorite_rounded
-                                              : Icons.favorite_border_rounded,
-                                          color: isFav
-                                              ? Colors.redAccent
-                                              : Colors.grey,
-                                          size: 22,
+                                        icon: Text(
+                                          isFav ? '❤️' : '🤍',
+                                          style: const TextStyle(fontSize: 20),
                                         ),
                                         onPressed: () =>
                                             appState.toggleFavorite(p.id),
@@ -542,14 +511,9 @@ class _ExploreTabState extends State<ExploreTab> {
                                                 'Add Plan'),
                                         padding: EdgeInsets.zero,
                                         constraints: const BoxConstraints(),
-                                        icon: Icon(
-                                          on
-                                              ? Icons.bookmark_rounded
-                                              : Icons.bookmark_border_rounded,
-                                          color: on
-                                              ? const Color(0xFF134E3A)
-                                              : Colors.grey,
-                                          size: 26,
+                                        icon: Text(
+                                          on ? '🔖' : '🏷️',
+                                          style: const TextStyle(fontSize: 20),
                                         ),
                                         onPressed: () =>
                                             appState.togglePlaceSelection(p.id),

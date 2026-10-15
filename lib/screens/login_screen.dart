@@ -135,11 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             child: const Center(
-                              child: Icon(
-                                Icons.map_rounded,
-                                size: 48,
-                                color: Color(0xFFE5A93C),
-                              ),
+                              child: Text('🗺️', style: TextStyle(fontSize: 36)),
                             ),
                           ),
                           const SizedBox(height: 16),
@@ -210,8 +206,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             decoration: const InputDecoration(
                               labelText: 'อีเมล',
                               hintText: 'example@email.com',
-                              prefixIcon: Icon(Icons.email_outlined,
-                                  color: Color(0xFF134E3A)),
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.all(12),
+                                child: Text('✉️', style: TextStyle(fontSize: 18)),
+                              ),
                             ),
                           ),
                           const SizedBox(height: 14),
@@ -223,17 +221,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             validator: _validatePassword,
                             decoration: InputDecoration(
                               labelText: 'รหัสผ่าน',
-                              prefixIcon: const Icon(Icons.lock_outline,
-                                  color: Color(0xFF134E3A)),
+                              prefixIcon: const Padding(
+                                padding: EdgeInsets.all(12),
+                                child: Text('🔒', style: TextStyle(fontSize: 18)),
+                              ),
                               suffixIcon: IconButton(
                                 tooltip: _obscurePassword
                                     ? 'แสดงรหัสผ่าน'
                                     : 'ซ่อนรหัสผ่าน',
-                                icon: Icon(
-                                  _obscurePassword
-                                      ? Icons.visibility_off_outlined
-                                      : Icons.visibility_outlined,
-                                  color: Colors.grey[600],
+                                icon: Text(
+                                  _obscurePassword ? '👁️' : '🙈',
+                                  style: const TextStyle(fontSize: 18),
                                 ),
                                 onPressed: () {
                                   setState(() {
@@ -284,11 +282,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               side: BorderSide(color: Colors.grey.shade300),
                             ),
-                            icon: const Icon(
-                              Icons.g_mobiledata_rounded,
-                              size: 28,
-                              color: Color(0xFF4285F4),
-                            ),
+                            icon: const Text('🌐', style: TextStyle(fontSize: 20)),
                             label: const Text(
                               'เข้าสู่ระบบด้วย Google',
                               style: TextStyle(

@@ -203,7 +203,7 @@ class _PlanTabState extends State<PlanTab> {
       builder: (ctx) => AlertDialog(
         title: Row(
           children: [
-            const Icon(Icons.share, color: Color(0xFF134E3A)),
+            const Text('📤', style: TextStyle(fontSize: 20)),
             const SizedBox(width: 8),
             Text(tr(context, 'แชร์แผนของฉัน', 'Share My Plan')),
           ],
@@ -297,8 +297,7 @@ class _PlanTabState extends State<PlanTab> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.event_note_outlined,
-                  size: 64, color: Colors.grey[400]),
+              const Text('📅', style: TextStyle(fontSize: 48)),
               const SizedBox(height: 12),
               Text(
                 tr(context, 'ยังไม่ได้เลือกสถานที่', 'No places selected'),
@@ -408,8 +407,7 @@ class _PlanTabState extends State<PlanTab> {
                             color: Colors.red.withAlpha(80),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.delete_sweep_rounded,
-                              color: Colors.white, size: 18),
+                          child: const Text('🗑️', style: TextStyle(fontSize: 14)),
                         ),
                         onPressed: () => _clearTripPlan(context),
                       ),
@@ -422,8 +420,7 @@ class _PlanTabState extends State<PlanTab> {
                             color: const Color(0xFFE5A93C).withAlpha(50),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.alt_route_rounded,
-                              color: Color(0xFFE5A93C), size: 18),
+                          child: const Text('🛣️', style: TextStyle(fontSize: 14)),
                         ),
                         onPressed: () {
                           appState.sortSelectedPlacesByRoute();
@@ -445,8 +442,7 @@ class _PlanTabState extends State<PlanTab> {
                             color: Colors.white.withAlpha(45),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.copy_rounded,
-                              color: Colors.white, size: 18),
+                          child: const Text('📋', style: TextStyle(fontSize: 14)),
                         ),
                         onPressed: () => _copyPlanSummary(context),
                       ),
@@ -458,7 +454,7 @@ class _PlanTabState extends State<PlanTab> {
                               horizontal: 10, vertical: 6),
                           visualDensity: VisualDensity.compact,
                         ),
-                        icon: const Icon(Icons.share_rounded, size: 16),
+                        icon: const Text('📤', style: TextStyle(fontSize: 14)),
                         label: Text(tr(context, 'แชร์แผน', 'Share'),
                             style:
                                 const TextStyle(fontWeight: FontWeight.bold)),
@@ -481,8 +477,7 @@ class _PlanTabState extends State<PlanTab> {
                 padding: const EdgeInsets.all(12),
                 child: Row(
                   children: [
-                    const Icon(Icons.calendar_month_rounded,
-                        color: Color(0xFF134E3A)),
+                    const Text('📅', style: TextStyle(fontSize: 20)),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(
@@ -561,8 +556,7 @@ class _PlanTabState extends State<PlanTab> {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.hotel_rounded,
-                            color: Colors.amber.shade900),
+                        const Text('🏨', style: TextStyle(fontSize: 18)),
                         const SizedBox(width: 8),
                         Text(
                           tr(context, '💡 คำแนะนำการเดินทางระยะไกล',
@@ -598,7 +592,7 @@ class _PlanTabState extends State<PlanTab> {
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           visualDensity: VisualDensity.compact,
                         ),
-                        icon: const Icon(Icons.bed_rounded, size: 16),
+                        icon: const Text('🛏️', style: TextStyle(fontSize: 14)),
                         label: Text(
                           '${tr(context, "🏨 ค้นหาโรงแรมแวะพักคืนที่", "🏨 Find Hotels in")} $midpointProvince',
                           style: const TextStyle(
@@ -633,19 +627,19 @@ class _PlanTabState extends State<PlanTab> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _budgetItem(
-                    icon: Icons.local_gas_station_outlined,
+                    icon: '⛽',
                     label: tr(context, 'ค่าน้ำมันประมาณ', 'Fuel Est.'),
                     value: '~ $fuelCost ฿',
                   ),
                   Container(width: 1, height: 28, color: Colors.grey[300]),
                   _budgetItem(
-                    icon: Icons.confirmation_number_outlined,
+                    icon: '🎟️',
                     label: tr(context, 'ค่าเข้าชมประมาณ', 'Fees Est.'),
                     value: '~ $entranceFee ฿',
                   ),
                   Container(width: 1, height: 28, color: Colors.grey[300]),
                   _budgetItem(
-                    icon: Icons.account_balance_wallet_outlined,
+                    icon: '👛',
                     label: tr(context, 'งบรวม (~)', 'Total Est.'),
                     value: '~ $totalCost ฿',
                     isHighlight: true,
@@ -668,8 +662,7 @@ class _PlanTabState extends State<PlanTab> {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.route_rounded,
-                            color: Color(0xFF134E3A), size: 18),
+                        const Text('🛣️', style: TextStyle(fontSize: 16)),
                         const SizedBox(width: 6),
                         Text(
                           tr(context, 'รายละเอียดระยะทาง & เวลาเดินทางระหว่างจุด',
@@ -730,7 +723,7 @@ class _PlanTabState extends State<PlanTab> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                            '⏱ ${tr(context, "เวลาเที่ยวรวม", "Visit Time")}: ~${durText(totalVisitMin)}',
+                            '⏱️ ${tr(context, "เวลาเที่ยวรวม", "Visit Time")}: ~${durText(totalVisitMin)}',
                             style: const TextStyle(
                                 fontSize: 11, fontWeight: FontWeight.w600)),
                         Text(
@@ -757,8 +750,7 @@ class _PlanTabState extends State<PlanTab> {
                 initiallyExpanded: _showPackingList,
                 onExpansionChanged: (v) =>
                     setState(() => _showPackingList = v),
-                leading: const Icon(Icons.backpack_outlined,
-                    color: Color(0xFF134E3A)),
+                leading: const Text('🎒', style: TextStyle(fontSize: 20)),
                 title: Row(
                   children: [
                     Text(
@@ -799,7 +791,7 @@ class _PlanTabState extends State<PlanTab> {
                           child: TextButton.icon(
                             style: TextButton.styleFrom(
                                 visualDensity: VisualDensity.compact),
-                            icon: const Icon(Icons.add, size: 16),
+                            icon: const Text('➕', style: TextStyle(fontSize: 12)),
                             label: Text(tr(context, 'เพิ่มของ', 'Add Item')),
                             onPressed: () => _showAddPackingDialog(context),
                           ),
@@ -825,8 +817,7 @@ class _PlanTabState extends State<PlanTab> {
                             onChanged: (_) =>
                                 appState.togglePackingItem(item.id),
                             secondary: IconButton(
-                              icon: const Icon(Icons.delete_outline,
-                                  size: 18, color: Colors.grey),
+                              icon: const Text('🗑️', style: TextStyle(fontSize: 16)),
                               onPressed: () =>
                                   appState.deletePackingItem(item.id),
                             ),
@@ -844,8 +835,7 @@ class _PlanTabState extends State<PlanTab> {
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 6),
             child: Row(
               children: [
-                const Icon(Icons.format_list_numbered,
-                    size: 18, color: Color(0xFF134E3A)),
+                const Text('📋', style: TextStyle(fontSize: 16)),
                 const SizedBox(width: 6),
                 Text(
                   tr(context, 'ลำดับสถานที่ในแผนเที่ยว', 'Itinerary Places Order'),
@@ -896,8 +886,7 @@ class _PlanTabState extends State<PlanTab> {
                     children: [
                       IconButton(
                         tooltip: tr(context, 'ลบออกจากแผน', 'Remove'),
-                        icon: const Icon(Icons.remove_circle_outline,
-                            color: Colors.redAccent, size: 22),
+                        icon: const Text('❌', style: TextStyle(fontSize: 16)),
                         onPressed: () => appState.togglePlaceSelection(p.id),
                       ),
                     ],
@@ -912,7 +901,7 @@ class _PlanTabState extends State<PlanTab> {
   }
 
   Widget _budgetItem({
-    required IconData icon,
+    required String icon,
     required String label,
     required String value,
     bool isHighlight = false,
@@ -922,7 +911,7 @@ class _PlanTabState extends State<PlanTab> {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 14, color: const Color(0xFF134E3A)),
+            Text(icon, style: TextStyle(fontSize: 12)),
             const SizedBox(width: 4),
             Text(label,
                 style: TextStyle(fontSize: 10, color: Colors.grey[600])),
