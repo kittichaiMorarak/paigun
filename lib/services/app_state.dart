@@ -4,6 +4,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import '../models/packing_item.dart';
 import '../models/place.dart';
+import '../models/place_seed_data.dart';
 import '../models/shared_plan.dart';
 import '../models/user.dart';
 import 'auth_service.dart';
@@ -114,21 +115,31 @@ class AppState extends ChangeNotifier {
     return result;
   }
 
-  /// โหลดข้อมูลทั้งหมดเมื่อเริ่มแอป (ทั้งจาก Seed Assets และจาก Persistent Storage ในดิสก์)
+  /// โหลดข้อมูลทั้งหมดเมื่อเริ่มแอป (ทั้งจาก Seed Assets, Storage, และ Fallback Data)
   Future<void> loadInitialData() async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      // 1. โหลดข้อมูลสถานที่จาก Seed + Custom Places จาก ดิสก์
-      final placesRaw = await rootBundle.loadString('assets/places_seed.json');
-      final seedPlaces = (jsonDecode(placesRaw) as List)
-          .map((e) => Place.fromJson(e as Map<String, dynamic>))
-          .toList();
-      final customPlaces = await StorageService.loadCustomPlaces();
-      _places = [...customPlaces, ...seedPlaces];
+      // 1. โหลดข้อมูลสถานที่
+      try {
+        final placesRaw = await rootBundle.loadString('assets/places_seed.json');
+        final seedPlaces = (jsonDecode(placesRaw) as List)
+            .map((e) => Place.fromJson(e as Map<String, dynamic>))
+            .toList();
+        final customPlaces = await StorageService.loadCustomPlaces();
+        _places = [...customPlaces, ...seedPlaces];
+      } catch (e) {
+        // Fallback ถ้ามีปัญหาโหลด Asset
+        final customPlaces = await StorageService.loadCustomPlaces();
+        _places = [...customPlaces, ...fallbackPlacesList];
+      }
 
-      // 2. โหลดแผนแชร์จาก ดิสก์ หรือจาก Seed
+      if (_places.isEmpty) {
+        _places = List.from(fallbackPlacesList);
+      }
+
+      // 2. โหลดแผนแชร์
       final storedPlans = await StorageService.loadSharedPlans();
       if (storedPlans != null && storedPlans.isNotEmpty) {
         _sharedPlans = storedPlans;
@@ -140,8 +151,12 @@ class AppState extends ChangeNotifier {
               .map((e) => SharedPlan.fromJson(e as Map<String, dynamic>))
               .toList();
         } catch (e) {
-          _sharedPlans = [];
+          _sharedPlans = List.from(fallbackSharedPlansList);
         }
+      }
+
+      if (_sharedPlans.isEmpty) {
+        _sharedPlans = List.from(fallbackSharedPlansList);
       }
 
       // 3. โหลดสภาวะการล็อกอิน
@@ -171,6 +186,8 @@ class AppState extends ChangeNotifier {
       }
     } catch (e) {
       debugPrint('Error loading initial data: $e');
+      if (_places.isEmpty) _places = List.from(fallbackPlacesList);
+      if (_sharedPlans.isEmpty) _sharedPlans = List.from(fallbackSharedPlansList);
     } finally {
       _isLoading = false;
       notifyListeners();
